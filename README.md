@@ -15,7 +15,7 @@ That's it! If you was expecting more, this module probably isn't for you.
 
 ## PHP-fpm
 
-If you're looking for php-fpm functionallity too, check out my other module phpfpm which includes a resource for adding virtual hosts to nginx.
+If you're looking for php-fpm functionallity too, check out my other module, [phpfpm](https://github.com/davidwinter/puppet-phpfpm), which includes a resource for adding virtual hosts to nginx.
 
 ## Contribute
 
