@@ -4,14 +4,27 @@ This puppet module aims to be lightweight and help you get an nginx virtual host
 
 Clone this into your modules directory. Then in your manifests file, add the following:
 
-	include nginx
-
-	nginx::vhost { 'vhost_name':
-		server_name => 'your.domain.com',
-		root		=> '/path/to/docroot',
+	nginx::vhost { 'your.domain.com':
+		root => '/path/to/docroot',
 	}
 
-That's it! If you was expecting more, this module probably isn't for you.
+That's it! If you was expecting more, this module probably isn't for you. Though, there are a few options:
+
+	nginx::vhost { 'my site':
+		root     => '/var/www',
+		ensure   => present,
+		priority => '3',
+		file     => 'my-site',
+		vhost    => 'my.site.com',
+		template => 'myconfig/mysite.conf.erb',
+	}
+
+The `nginx` class can also be configured:
+
+	class { 'nginx':
+		ensure        => present,
+		default_vhost => false,
+	}
 
 ## PHP-fpm
 

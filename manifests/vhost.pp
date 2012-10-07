@@ -1,21 +1,34 @@
 define nginx::vhost (
-	$vhost = $title,
+	$ensure = 'present',
 	$root = '/var/www', 
-	$server_name = '_'
+	$priority = '50',
+	$file = $name,
+	$server_name = $name,
+	$index = 'index.html',
+	$template = 'nginx/vhost.conf.erb',
 ) {
-	
-	file { "/etc/nginx/sites-available/${vhost}.conf":
-		ensure 	=> file,
-		content => template('nginx/vhost.conf.erb'),
-		require => [
-			File["/etc/nginx/sites-enabled/${vhost}.conf"],
-		],
-		notify 	=> Class['nginx::service'],
+	include nginx
+
+	$link_ensure = $ensure ? {
+		'present' => 'link',
+		default => 'absent',
 	}
 
-	file { "/etc/nginx/sites-enabled/${vhost}.conf":
-		ensure 	=> link,
-		target 	=> "/etc/nginx/sites-available/${vhost}.conf",
-		require => Class['nginx::install'],
+	$file_ensure = $ensure ? {
+		'present' => 'file',
+		default => 'absent',
+	}
+
+	file { "/etc/nginx/sites-available/${priority}-${file}.conf":
+		ensure 	=> $file_ensure,
+		content => template($template),
+		require => File["/etc/nginx/sites-enabled/${priority}-${file}.conf"],
+		notify 	=> Service['nginx'],
+	}
+
+	file { "/etc/nginx/sites-enabled/${priority}-${file}.conf":
+		ensure 	=> $link_ensure,
+		target 	=> "/etc/nginx/sites-available/${priority}-${file}.conf",
+		require => Package['nginx'],
 	}
 }
