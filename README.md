@@ -11,12 +11,12 @@ Clone this into your modules directory. Then in your manifests file, add the fol
 That's it! If you was expecting more, this module probably isn't for you. Though, there are a few options:
 
 	nginx::vhost { 'my site':
-		root     => '/var/www',
-		ensure   => present,
-		priority => '3',
-		file     => 'my-site',
-		vhost    => 'my.site.com',
-		template => 'myconfig/mysite.conf.erb',
+		root        => '/var/www',
+		ensure      => present,
+		priority    => '3',
+		file        => 'my-site',
+		server_name => 'my.site.com',
+		template    => 'myconfig/mysite.conf.erb',
 	}
 
 The `nginx` class can also be configured:
