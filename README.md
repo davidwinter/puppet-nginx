@@ -8,7 +8,7 @@ If you're looking for `php-fpm` functionallity too, check out my other module, [
 
 With librarian-puppet, add the following to your Puppetfile:
 
-	mod 'postfix',
+	mod 'nginx',
 		:git => 'git://github.com/davidwinter/puppet-nginx.git'
 
 Then run `librarian-puppet install`.
