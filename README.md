@@ -1,35 +1,47 @@
-This puppet module aims to be lightweight and help you get an nginx virtual host up and running quickly. It was developed with Vagrant in mind so that I could get a web environment up and running in as few lines as possible.
+# puppet-nginx
 
-## How to use
+This puppet module aims to be lightweight and help you get an `nginx` virtual host up and running quickly. It was developed with `vagrant` in mind so that I could get a web environment up and running in as few lines as possible.
 
-Clone this into your modules directory. Then in your manifests file, add the following:
+If you're looking for `php-fpm` functionallity too, check out my other module, [phpfpm](https://github.com/davidwinter/puppet-phpfpm), which includes a resource for adding virtual hosts to nginx.
+
+## Install
+
+With librarian-puppet, add the following to your Puppetfile:
+
+	mod 'postfix',
+		:git => 'git://github.com/davidwinter/puppet-nginx.git'
+
+Then run `librarian-puppet install`.
+
+## Usage
 
 	nginx::vhost { 'your.domain.com':
-		root => '/path/to/docroot',
+	  root => '/path/to/docroot',
 	}
 
 That's it! If you was expecting more, this module probably isn't for you. Though, there are a few options:
 
 	nginx::vhost { 'my site':
-		root        => '/var/www',
-		ensure      => present,
-		priority    => '3',
-		file        => 'my-site',
-		server_name => 'my.site.com',
-		template    => 'myconfig/mysite.conf.erb',
+	  ensure      => present,
+	  root        => '/var/www',
+	  priority    => '3',
+	  file        => 'my-site',
+	  server_name => 'my.site.com',
+	  index       => 'index.html',
+	  template    => 'myconfig/mysite.conf.erb',
 	}
 
 The `nginx` class can also be configured:
 
 	class { 'nginx':
-		ensure        => present,
-		default_vhost => false,
+	  ensure        => present,
+	  default_vhost => false,
 	}
 
-## PHP-fpm
+## Author
 
-If you're looking for php-fpm functionallity too, check out my other module, [phpfpm](https://github.com/davidwinter/puppet-phpfpm), which includes a resource for adding virtual hosts to nginx.
+David Winter <i@djw.me>
 
-## Contribute
+## Licence
 
-Please feel free to submit pull requests for any other basic functionallity you think this module should include.
+MIT
